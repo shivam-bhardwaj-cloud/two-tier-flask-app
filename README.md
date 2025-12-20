@@ -1,130 +1,183 @@
- 
-# Flask App with MySQL Docker Setup
+# Flask + MySQL Two-Tier Application (Dockerized)
 
-This is a simple Flask app that interacts with a MySQL database. The app allows users to submit messages, which are then stored in the database and displayed on the frontend.
+A **production-style two-tier application** built using **Flask** and **MySQL**, containerized with **Docker** and orchestrated using **Docker Compose**.
 
-## Prerequisites
+This project is designed specifically to demonstrate **Cloud & DevOps fundamentals** such as containerization, service dependency handling, environment-based configuration, and clean system design.
 
-Before you begin, make sure you have the following installed:
+---
 
+## 🎯 Project Goal (For Recruiters)
+
+
+The goal of this project is to showcase my ability to:
+
+- Build and containerize real applications
+- Design clean and deployable system architectures
+- Use Docker and Docker Compose correctly
+- Manage configuration using environment variables
+- Understand service startup order and healthchecks
+---
+
+## 🏗️ Architecture Overview
+
+**Two-Tier Architecture**
+
+1. **Application Tier**
+   - Python Flask backend
+   - Handles HTTP requests and database operations
+   - Runs inside a Docker container
+
+2. **Database Tier**
+   - MySQL 5.7
+   - Persistent storage using Docker volumes
+
+Both services communicate over a **Docker bridge network** using service names instead of IPs.
+
+---
+
+## 🧰 Tech Stack
+
+- **Backend**: Python (Flask)
+- **Database**: MySQL 5.7
+- **Containerization**: Docker
+- **Orchestration**: Docker Compose
+- **Configuration**: Environment Variables (`.env` files)
+- **OS Compatibility**: Linux / Windows / macOS
+
+---
+
+## 📁 Repository Structure
+
+```
+├── Dockerfile
+├── docker-compose.yml
+├── app.py
+├── requirements.txt
+├── flask.env
+├── mysql.env
+├── message.sql
+└── templates/
+    └── index.html
+```
+
+**Why this structure?**
+- No unused files
+- Every file is actively used at runtime
+- Clear separation of concerns
+
+---
+
+## 🧠 Key DevOps Improvements
+
+### 1️⃣ Cleaned Repository Scope
+- Removed Jenkinsfile, Makefile, Kubernetes manifests
+- These were not part of the active deployment flow
+
+---
+
+### 2️⃣ Optimized Docker Image Design
+- Single Dockerfile
+- Dependencies installed in `/app/deps`
+- Explicit `PYTHONPATH` usage
+
+**Impact**
+- Faster builds
+- Isolated dependencies
+- Easier debugging
+---
+
+### 3️⃣ Environment-Based Configuration
+- Application and database configs moved to `.env` files
+- No hardcoded credentials in code
+
+**Impact**
+- Secure configuration handling
+- Easy environment switching (local / cloud)
+- Industry best practice
+---
+
+### 4️⃣ Reliable Service Startup
+- MySQL healthcheck implemented
+- Flask starts only after database is healthy
+
+**Impact**
+- Stable container startup
+- Production-aligned behavior
+
+---
+
+### 5️⃣ UI for Observability
+The frontend is **not a product UI**.
+
+Its purpose:
+- Show real-time database writes
+- Visualize backend availability
+- Help during demos.
+
+This makes system behavior visible without checking logs.
+
+---
+
+## 🔐 Environment Configuration
+
+### `mysql.env`
+
+``` 
+MYSQL_ROOT_PASSWORD=your_root_password
+MYSQL_USER=your_username
+MYSQL_PASSWORD=your_password
+MYSQL_DATABASE=your_database
+```
+
+
+### `flask.env`
+```
+MYSQL_HOST=mysql
+MYSQL_USER=your_username
+MYSQL_PASSWORD=your_password
+MYSQL_DB=your_database
+```
+---
+
+## 🚀 How to Run the Project
+
+### Prerequisites
 - Docker
-- Git (optional, for cloning the repository)
+- Docker Compose
 
-## Setup
-
-1. Clone this repository (if you haven't already):
-
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd your-repo-name
-   ```
-
-3. Create a `.env` file in the project directory to store your MySQL environment variables:
-
-   ```bash
-   touch .env
-   ```
-
-4. Open the `.env` file and add your MySQL configuration:
-
-   ```
-   MYSQL_HOST=mysql
-   MYSQL_USER=your_username
-   MYSQL_PASSWORD=your_password
-   MYSQL_DB=your_database
-   ```
-
-## Usage
-
-1. Start the containers using Docker Compose:
-
-   ```bash
-   docker-compose up --build
-   ```
-
-2. Access the Flask app in your web browser:
-
-   - Frontend: http://localhost
-   - Backend: http://localhost:5000
-
-3. Create the `messages` table in your MySQL database:
-
-   - Use a MySQL client or tool (e.g., phpMyAdmin) to execute the following SQL commands:
-   
-     ```sql
-     CREATE TABLE messages (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         message TEXT
-     );
-     ```
-
-4. Interact with the app:
-
-   - Visit http://localhost to see the frontend. You can submit new messages using the form.
-   - Visit http://localhost:5000/insert_sql to insert a message directly into the `messages` table via an SQL query.
-
-## Cleaning Up
-
-To stop and remove the Docker containers, press `Ctrl+C` in the terminal where the containers are running, or use the following command:
-
+### Start the Application
 ```bash
-docker-compose down
+docker compose up
 ```
+## 🌐 Access
 
-## To run this two-tier application using  without docker-compose
+- **Application**: http://localhost
+---
 
-- First create a docker image from Dockerfile
-```bash
-docker build -t flaskapp .
-```
+## 🧪 What This Project Proves
 
-- Now, make sure that you have created a network using following command
-```bash
-docker network create twotier
-```
+This project demonstrates:
 
-- Attach both the containers in the same network, so that they can communicate with each other
+- Understanding of Docker containers  
+- Practical Docker Compose usage  
+- Service dependency management  
+- Environment variable handling  
+- Clean repository design
+---
 
-i) MySQL container 
-```bash
-docker run -d \
-    --name mysql \
-    -v mysql-data:/var/lib/mysql \
-    --network=twotier \
-    -e MYSQL_DATABASE=mydb \
-    -e MYSQL_ROOT_PASSWORD=admin \
-    -p 3306:3306 \
-    mysql:5.7
+## 🔮 Future Enhancements (Planned)
 
-```
-ii) Backend container
-```bash
-docker run -d \
-    --name flaskapp \
-    --network=twotier \
-    -e MYSQL_HOST=mysql \
-    -e MYSQL_USER=root \
-    -e MYSQL_PASSWORD=admin \
-    -e MYSQL_DB=mydb \
-    -p 5000:5000 \
-    flaskapp:latest
+- CI/CD pipeline using Jenkins  
+- Cloud deployment (AWS / OCI)  
+- Monitoring and logging  
+- Secure secrets management  
 
-```
+These are intentionally excluded for now to keep the project focused and readable.
 
-## Notes
+---
 
-- Make sure to replace placeholders (e.g., `your_username`, `your_password`, `your_database`) with your actual MySQL configuration.
+## 👤 Author
 
-- This is a basic setup for demonstration purposes. In a production environment, you should follow best practices for security and performance.
-
-- Be cautious when executing SQL queries directly. Validate and sanitize user inputs to prevent vulnerabilities like SQL injection.
-
-- If you encounter issues, check Docker logs and error messages for troubleshooting.
-
-```
-
+**SHIVAM BHARDWAJ**  
+Aspiring Cloud / DevOps Engineer  
+Networking • Linux • Git • GitHub • Docker • AWS 
