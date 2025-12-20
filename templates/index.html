@@ -1,184 +1,1287 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-color-scheme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App new🚀</title>
-    <style>
-        /* Import Google Font */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask + SQL • Message Console</title>
 
-        /* Reset Default Styles */
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-teal-800: rgba(41, 150, 161, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+
+            --color-background: var(--color-charcoal-700);
+            --color-surface: var(--color-charcoal-800);
+            --color-text: var(--color-gray-200);
+            --color-text-secondary: rgba(167, 169, 169, 0.8);
+            --color-primary: var(--color-teal-300);
+            --color-primary-hover: var(--color-teal-400);
+            --color-primary-active: var(--color-teal-800);
+            --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+            --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+            --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+            --color-border: rgba(var(--color-gray-400-rgb), 0.4);
+            --color-error: var(--color-red-400);
+            --color-success: var(--color-teal-300);
+            --color-warning: var(--color-orange-400);
+            --color-info: var(--color-gray-300);
+            --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+            --color-card-border: rgba(var(--color-gray-400-rgb), 0.25);
+            --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+            --color-btn-primary-text: var(--color-slate-900);
+            --color-select-caret: rgba(245, 245, 245, 0.8);
+
+            --font-family-base: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Roboto, sans-serif;
+            --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco,
+                Consolas, "Liberation Mono", "Courier New", monospace;
+
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 22px;
+
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+
+            --space-2: 2px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-10: 10px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.04);
+            --shadow-md: 0 16px 45px rgba(0, 0, 0, 0.55);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+
+            --duration-fast: 150ms;
+            --duration-normal: 220ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+            --focus-ring: 0 0 0 2px rgba(252, 252, 249, 0.15),
+                0 0 0 4px var(--color-focus-ring);
+        }
+
         * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            height: 100%;
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            background: radial-gradient(circle at top, #12212a 0, #050608 55%);
+            color: var(--color-text);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Background with subtle gradient */
         body {
-            background: linear-gradient(to bottom, #0f0f0f, #1c1c1c);
-            color: #fff;
             display: flex;
+            align-items: stretch;
             justify-content: center;
+            padding: 24px;
+        }
+
+        .shell {
+            width: 100%;
+            max-width: 1080px;
+            background: linear-gradient(
+                    135deg,
+                    rgba(33, 128, 141, 0.06),
+                    rgba(0, 0, 0, 0.85)
+                ),
+                radial-gradient(circle at top left, #24505a 0, transparent 55%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: var(--shadow-md);
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .shell::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at top right,
+                rgba(50, 184, 198, 0.16),
+                transparent 60%
+            );
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .shell__sidebar,
+        .shell__main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .shell__sidebar {
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(50, 184, 198, 0.14),
+                    transparent 55%
+                ),
+                linear-gradient(
+                    180deg,
+                    rgba(7, 11, 13, 0.96),
+                    rgba(5, 7, 9, 1)
+                );
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            justify-content: flex-start;
+            gap: 10px;
         }
 
-        /* Glassmorphic Container */
-        .container {
-            max-width: 600px;
-            width: 100%;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .brand__logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 12px;
+            background: conic-gradient(
+                from 220deg,
+                var(--color-teal-400),
+                #56cfe1,
+                #f5f5f5,
+                var(--color-teal-500)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 1px rgba(9, 9, 11, 0.7),
+                0 10px 25px rgba(0, 0, 0, 0.7);
         }
 
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
+        .brand__logo span {
+            font-size: 16px;
+            font-weight: 700;
+            color: #050816;
         }
 
-        /* Elegant Heading */
-        h1 {
-            font-size: 2rem;
+        .brand__meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand__title {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: 0.02em;
+        }
+
+        .brand__subtitle {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: var(--shadow-inset-sm);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .pill__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #22c55e 0, #15803d 55%);
+            box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+        }
+
+        .sidebar-section {
+            padding: 10px 0;
+            border-radius: 12px;
+        }
+
+        .sidebar-section__label {
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stat-card {
+            border-radius: 12px;
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(45, 166, 178, 0.18),
+                    transparent 55%
+                ),
+                rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: var(--shadow-sm);
+            padding: 12px 12px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-card__top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .stat-card__label {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .stat-card__value {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .stat-card__hint {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .meta-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .meta-row span {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meta-row strong {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+        }
+
+        .meta-row code {
+            font-family: var(--font-family-mono);
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        .shell__main {
+            padding: 20px 22px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: radial-gradient(
+                    circle at top right,
+                    rgba(33, 128, 141, 0.18),
+                    transparent 60%
+                ),
+                linear-gradient(180deg, #020617, #020617 55%, #020617);
+        }
+
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .main-header__titles {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .main-header__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            letter-spacing: 0.01em;
+        }
+
+        .main-header__subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .env-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .env-tag__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #22c55e 0, #16a34a 55%);
+        }
+
+        .content-card {
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            min-height: 260px;
+            overflow: hidden;
+        }
+
+        .content-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 12px 8px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(51, 65, 85, 0.9),
+                    rgba(15, 23, 42, 1)
+                );
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-title {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .toolbar-caption {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: var(--font-size-xs);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .badge__pill {
+            min-width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #e5e7eb 0, #9ca3af 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #020617;
             font-weight: 600;
-            background: linear-gradient(135deg, #ff9800, #e65100);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
         }
 
-        /* Messages Box */
-        .messages {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .messages p {
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            margin-bottom: 5px;
-            font-size: 0.95rem;
-        }
-
-        /* Animated Input Fields */
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        input[type="text"]:focus {
-            border-color: #ff9800;
-            box-shadow: 0 0 12px rgba(255, 152, 0, 0.5);
-            outline: none;
-        }
-
-        /* Glowing Submit Button */
-        input[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #ff9800, #e65100);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
             cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            transition: all var(--duration-normal) var(--ease-standard);
         }
 
-        input[type="submit"]:hover {
-            box-shadow: 0 0 20px rgba(255, 152, 0, 0.6);
-            transform: translateY(-2px);
+        .btn:hover {
+            border-color: rgba(148, 163, 184, 0.85);
+            color: var(--color-text);
+            background: rgba(15, 23, 42, 1);
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+        }
+
+        .btn--primary {
+            background: linear-gradient(
+                135deg,
+                var(--color-teal-400),
+                var(--color-teal-600)
+            );
+            color: var(--color-btn-primary-text);
+            border-color: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 1),
+                0 12px 25px rgba(15, 23, 42, 0.85);
+        }
+
+        .btn--primary:hover {
+            background: linear-gradient(
+                135deg,
+                var(--color-teal-300),
+                var(--color-teal-600)
+            );
+        }
+
+        .btn--danger {
+            border-color: rgba(248, 113, 113, 0.75);
+            color: var(--color-error);
+        }
+
+        .btn--danger:hover {
+            background: rgba(185, 28, 28, 0.16);
+            color: #fecaca;
+            border-color: rgba(248, 113, 113, 0.95);
+        }
+
+        .btn[disabled] {
+            opacity: 0.55;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .messages {
+            flex: 1;
+            position: relative;
+            padding: 12px 12px 10px;
+            overflow: hidden;
+        }
+
+        .messages__list {
+            position: relative;
+            border-radius: 11px;
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(51, 65, 85, 0.8),
+                    rgba(15, 23, 42, 0.95)
+                ),
+                rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.38);
+            box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9),
+                var(--shadow-inset-sm);
+            padding: 10px 10px 6px;
+            height: 260px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(75, 85, 99, 0.8)
+                rgba(15, 23, 42, 0.95);
+        }
+
+        .messages__list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages__list::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .messages__list::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #1e293b, #64748b);
+            border-radius: 999px;
+        }
+
+        .message {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 8px 8px;
+            margin-bottom: 6px;
+            border-radius: 9px;
+            background: linear-gradient(
+                    135deg,
+                    rgba(34, 197, 235, 0.12),
+                    rgba(30, 64, 175, 0)
+                ),
+                rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.48);
+        }
+
+        .message__body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message__text {
+            font-size: var(--font-size-sm);
+            line-height: 1.45;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .message__meta {
+            margin-top: 4px;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .message__meta-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.8);
+        }
+
+        .message__actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .message__actions button {
+            border-radius: 999px;
+            border: none;
+            background: transparent;
+            color: rgba(148, 163, 184, 0.8);
+            padding: 2px 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: color var(--duration-fast) var(--ease-standard),
+                transform var(--duration-fast) var(--ease-standard);
+        }
+
+        .message__actions button:hover {
+            color: #fca5a5;
+            transform: translateY(-1px);
+        }
+
+        .messages__empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 8px;
+            height: 100%;
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .messages__empty-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #0ea5e9 0, #1e293b 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.85);
+        }
+
+        .messages__empty-icon span {
+            font-size: 22px;
+        }
+
+        .messages__empty-muted {
+            font-size: var(--font-size-xs);
+            opacity: 0.9;
+        }
+
+        .messages__status {
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        .status-chip__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #facc15 0, #eab308 55%);
+        }
+
+        .status-chip--ok .status-chip__dot {
+            background: radial-gradient(circle, #22c55e 0, #16a34a 55%);
+        }
+
+        .status-chip--error .status-chip__dot {
+            background: radial-gradient(circle, #f97373 0, #b91c1c 55%);
+        }
+
+        .status-chip--loading .status-chip__dot {
+            background: radial-gradient(circle, #38bdf8 0, #0284c7 55%);
+        }
+
+        .status-chip__label {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .status-chip__text {
+            color: var(--color-text-secondary);
+        }
+
+        .composer {
+            margin-top: 10px;
+            padding: 10px 10px 8px;
+            border-top: 1px solid rgba(148, 163, 184, 0.35);
+            background: radial-gradient(
+                    circle at bottom,
+                    rgba(15, 23, 42, 1),
+                    rgba(15, 23, 42, 0.95)
+                ),
+                rgba(15, 23, 42, 0.98);
+        }
+
+        .composer__form {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .composer__field {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .composer__label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .composer__label {
+            font-weight: var(--font-weight-medium);
+        }
+
+        .composer__hint {
+            opacity: 0.8;
+        }
+
+        .composer__input {
+            width: 100%;
+            min-height: 38px;
+            max-height: 96px;
+            resize: vertical;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(15, 23, 42, 0.9),
+                    rgba(15, 23, 42, 0.98)
+                );
+            color: var(--color-text);
+            font: inherit;
+            font-size: var(--font-size-sm);
+            line-height: 1.4;
+            box-shadow: var(--shadow-inset-sm);
+            transition: border-color var(--duration-fast) var(--ease-standard),
+                box-shadow var(--duration-fast) var(--ease-standard),
+                background var(--duration-fast) var(--ease-standard);
+        }
+
+        .composer__input::placeholder {
+            color: rgba(148, 163, 184, 0.9);
+        }
+
+        .composer__input:focus-visible {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--focus-ring);
+            background: radial-gradient(
+                    circle at top left,
+                    rgba(30, 64, 175, 0.5),
+                    rgba(15, 23, 42, 0.98)
+                );
+        }
+
+        .shortcut-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            font-size: 10px;
+        }
+
+        .shortcut-hint kbd {
+            font-family: var(--font-family-mono);
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 1);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+        }
+
+        .footer {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            opacity: 0.85;
+        }
+
+        .footer__stack {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer__stack-pill {
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .footer__hint {
+            font-size: var(--font-size-xs);
+        }
+
+        @media (max-width: 900px) {
+            .shell {
+                grid-template-columns: minmax(0, 1fr);
             }
 
-            h1 {
-                font-size: 1.6rem;
+            .shell__sidebar {
+                display: none;
             }
 
-            input[type="text"], input[type="submit"] {
-                font-size: 14px;
+            body {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shell {
+                border-radius: 14px;
+            }
+
+            .main-header__title {
+                font-size: 18px;
+            }
+
+            .composer__form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .composer__actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+            }
+
+            .btn {
+                padding-inline: 10px;
             }
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Flask + MySQL App [2 tier] - Junoon 🔥</h1>
+    <div class="shell" aria-label="Flask two-tier demo console">
+        <aside class="shell__sidebar" aria-label="App meta">
+            <div class="brand">
+                <div class="brand__logo">
+                    <span>F2</span>
+                </div>
+                <div class="brand__meta">
+                    <div class="brand__title">Flask • SQL</div>
+                    <div class="brand__subtitle">Two-tier demo console</div>
+                </div>
+            </div>
 
-        <div class="messages">
-            {% for message in messages %}
-                <p>{{ message[0] }}</p>
-            {% endfor %}
-        </div>
+            <div class="pill" aria-label="Live connection status">
+                <span class="pill__dot" aria-hidden="true"></span>
+                <span>App container healthy</span>
+            </div>
 
-        <form id="messageForm">
-            <input type="text" name="new_message" placeholder="Type your message..." required>
-            <input type="submit" value="Send">
-        </form>
+            <section class="sidebar-section" aria-label="Stats">
+                <div class="sidebar-section__label">Overview</div>
+
+                <article class="stat-card" aria-label="Message statistics">
+                    <div class="stat-card__top">
+                        <div>
+                            <div class="stat-card__label">Total messages</div>
+                            <div class="stat-card__value" id="stat-count">
+                                {{ messages|length }}
+                            </div>
+                        </div>
+                        <div class="status-chip status-chip--ok" id="status-chip">
+                            <span class="status-chip__dot"></span>
+                            <span class="status-chip__label">READY</span>
+                        </div>
+                    </div>
+                    <div class="stat-card__hint">
+                        This UI writes directly to your SQL-backed Flask endpoint.
+                    </div>
+                </article>
+            </section>
+
+            <section class="sidebar-section" aria-label="Runtime">
+                <div class="sidebar-section__label">Runtime</div>
+                <div class="meta-row">
+                    <span>
+                        <strong>Frontend</strong>
+                        <code>HTML • CSS • JS</code>
+                    </span>
+                    <span>
+                        <strong>Backend</strong>
+                        <code>Flask</code>
+                    </span>
+                    <span>
+                        <strong>Storage</strong>
+                        <code>SQL Database</code>
+                    </span>
+                </div>
+            </section>
+        </aside>
+
+        <main class="shell__main">
+            <header class="main-header">
+                <div class="main-header__titles">
+                    <div class="main-header__title">
+                        Message Stream
+                    </div>
+                    <div class="main-header__subtitle">
+                        Type a message and persist it through your Flask + SQL stack.
+                    </div>
+                </div>
+                <div class="env-tag" aria-label="Environment">
+                    <span class="env-tag__dot" aria-hidden="true"></span>
+                    <span>Local demo</span>
+                </div>
+            </header>
+
+            <section class="content-card" aria-label="Messages">
+                <div class="content-toolbar">
+                    <div class="toolbar-left">
+                        <div>
+                            <div class="toolbar-title">Messages</div>
+                            <div class="toolbar-caption">
+                                Latest entries appear at the bottom.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toolbar-right">
+                        <div class="badge">
+                            <div class="badge__pill" id="badge-count">
+                                {{ messages|length }}
+                            </div>
+                            <span>saved</span>
+                        </div>
+                        <!-- Optional: hook these up to real routes when ready -->
+                        <button class="btn btn--danger" id="clear-all" type="button" disabled>
+                            Clear all
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages">
+                    <div class="messages__list" id="messages" aria-live="polite">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <article class="message" data-id="{{ loop.index0 }}">
+                                    <div class="message__body">
+                                        <div class="message__text">
+                                            {{ message[0] }}
+                                        </div>
+                                        <div class="message__meta">
+                                            <span>Saved via Flask</span>
+                                            <span class="message__meta-dot"></span>
+                                            <span class="message__timestamp">
+                                                {{ loop.index }} of {{ messages|length }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="message__actions">
+                                        <button
+                                            type="button"
+                                            class="message__delete"
+                                            aria-label="Delete this message (not wired yet)"
+                                            title="Delete (requires backend route)"
+                                            disabled
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        {% else %}
+                            <div class="messages__empty" id="empty-state">
+                                <div class="messages__empty-icon" aria-hidden="true">
+                                    <span>💬</span>
+                                </div>
+                                <div>Nothing here yet.</div>
+                                <div class="messages__empty-muted">
+                                    Your first message will be stored in the SQL DB and reflected here.
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="messages__status">
+                        <div class="status-chip status-chip--loading" id="request-status">
+                            <span class="status-chip__dot"></span>
+                            <span class="status-chip__label" id="request-status-label">
+                                IDLE
+                            </span>
+                            <span class="status-chip__text" id="request-status-text">
+                                Waiting for input
+                            </span>
+                        </div>
+                        <span id="last-updated">
+                            Last updated just now.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="composer">
+                    <form
+                        class="composer__form"
+                        id="messageForm"
+                        autocomplete="off"
+                        novalidate
+                    >
+                        <div class="composer__field">
+                            <div class="composer__label-row">
+                                <label
+                                    class="composer__label"
+                                    for="new_message"
+                                >
+                                    New message
+                                </label>
+                                <div class="shortcut-hint" aria-hidden="true">
+                                    <span>Shortcut</span>
+                                    <kbd>Enter</kbd>
+                                </div>
+                            </div>
+                            <textarea
+                                id="new_message"
+                                name="new_message"
+                                class="composer__input"
+                                placeholder="Type something meaningful for the interviewer…"
+                                rows="2"
+                                required
+                                maxlength="500"
+                            ></textarea>
+                            <div class="composer__hint">
+                                Persisted via <code>/submit</code>. Messages are kept simple on purpose.
+                            </div>
+                        </div>
+
+                        <div class="composer__actions">
+                            <button
+                                type="submit"
+                                class="btn btn--primary"
+                                id="submit-btn"
+                            >
+                                <span>Send</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer__stack">
+                    <span class="footer__stack-pill">Flask • SQL • Docker</span>
+                </div>
+                <div class="footer__hint">
+                    No frameworks, no magic — just a clean two-tier demo.
+                </div>
+            </footer>
+        </main>
     </div>
 
-    <!-- jQuery for Smooth AJAX Requests -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#messageForm").on("submit", function(event) {
-                event.preventDefault(); // Prevent page reload
+        (function () {
+            const form = document.getElementById("messageForm");
+            const textarea = document.getElementById("new_message");
+            const messagesBox = document.getElementById("messages");
+            const statCount = document.getElementById("stat-count");
+            const badgeCount = document.getElementById("badge-count");
+            const statusChip = document.getElementById("request-status");
+            const statusLabel = document.getElementById("request-status-label");
+            const statusText = document.getElementById("request-status-text");
+            const lastUpdated = document.getElementById("last-updated");
+            const submitBtn = document.getElementById("submit-btn");
+            const clearAllBtn = document.getElementById("clear-all");
+            const emptyState = document.getElementById("empty-state");
 
-                let messageInput = $("input[name='new_message']");
-                let message = messageInput.val().trim();
-
-                if (message === "") {
-                    alert("Message cannot be empty!");
-                    return;
+            function setStatus(mode, text) {
+                statusChip.classList.remove(
+                    "status-chip--ok",
+                    "status-chip--error",
+                    "status-chip--loading"
+                );
+                if (mode === "loading") {
+                    statusChip.classList.add("status-chip--loading");
+                    statusLabel.textContent = "WORKING";
+                } else if (mode === "ok") {
+                    statusChip.classList.add("status-chip--ok");
+                    statusLabel.textContent = "OK";
+                } else if (mode === "error") {
+                    statusChip.classList.add("status-chip--error");
+                    statusLabel.textContent = "ERROR";
                 }
+                statusText.textContent = text;
+            }
 
-                $.ajax({
-                    url: "/submit",
-                    type: "POST",
-                    data: { new_message: message },
-                    success: function(response) {
-                        if (response && response.message) {
-                            $(".messages").append("<p>" + response.message + "</p>");
-                            messageInput.val("");
-                        } else {
-                            console.error("Unexpected response format:", response);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                    }
+            function incrementCounters() {
+                const current = parseInt(statCount.textContent || "0", 10);
+                const next = current + 1;
+                statCount.textContent = String(next);
+                badgeCount.textContent = String(next);
+            }
+
+            function updateLastUpdated() {
+                const now = new Date();
+                const formatted = now.toLocaleTimeString(undefined, {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
                 });
+                lastUpdated.textContent = "Last updated at " + formatted;
+            }
+
+            function createMessageElement(text, index, total) {
+                const article = document.createElement("article");
+                article.className = "message";
+                article.dataset.id = String(index);
+
+                const body = document.createElement("div");
+                body.className = "message__body";
+
+                const msgText = document.createElement("div");
+                msgText.className = "message__text";
+                msgText.textContent = text;
+
+                const meta = document.createElement("div");
+                meta.className = "message__meta";
+                const span1 = document.createElement("span");
+                span1.textContent = "Saved via Flask";
+                const dot = document.createElement("span");
+                dot.className = "message__meta-dot";
+                const span2 = document.createElement("span");
+                span2.className = "message__timestamp";
+                span2.textContent = total + " of " + total;
+
+                meta.appendChild(span1);
+                meta.appendChild(dot);
+                meta.appendChild(span2);
+
+                body.appendChild(msgText);
+                body.appendChild(meta);
+
+                const actions = document.createElement("div");
+                actions.className = "message__actions";
+                const delBtn = document.createElement("button");
+                delBtn.type = "button";
+                delBtn.className = "message__delete";
+                delBtn.textContent = "Delete";
+                delBtn.disabled = true;
+                delBtn.title = "Delete (requires backend route)";
+                delBtn.setAttribute(
+                    "aria-label",
+                    "Delete this message (not wired yet)"
+                );
+                actions.appendChild(delBtn);
+
+                article.appendChild(body);
+                article.appendChild(actions);
+
+                return article;
+            }
+
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const raw = textarea.value.trim();
+                if (!raw) return;
+
+                submitBtn.disabled = true;
+                textarea.disabled = true;
+                setStatus("loading", "Sending message to /submit …");
+
+                try {
+                    const formData = new FormData();
+                    formData.append("new_message", raw);
+
+                    const res = await fetch("/submit", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (!res.ok) {
+                        throw new Error("HTTP " + res.status);
+                    }
+
+                    const data = await res.json();
+
+                    if (data && data.message) {
+                        if (emptyState) {
+                            emptyState.remove();
+                        }
+
+                        const currentTotal =
+                            parseInt(statCount.textContent || "0", 10) + 1;
+                        const el = createMessageElement(
+                            data.message,
+                            currentTotal - 1,
+                            currentTotal
+                        );
+                        messagesBox.appendChild(el);
+                        messagesBox.scrollTop = messagesBox.scrollHeight;
+                        incrementCounters();
+                        updateLastUpdated();
+                        textarea.value = "";
+                        setStatus("ok", "Message stored successfully.");
+                    } else {
+                        setStatus(
+                            "error",
+                            "Unexpected response from /submit (no message field)."
+                        );
+                    }
+                } catch (err) {
+                    console.error(err);
+                    setStatus(
+                        "error",
+                        "Failed to send message. Is the Flask backend running?"
+                    );
+                } finally {
+                    submitBtn.disabled = false;
+                    textarea.disabled = false;
+                    textarea.focus();
+                }
             });
-        });
+
+            textarea.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    form.requestSubmit();
+                }
+            });
+
+            clearAllBtn.addEventListener("click", function () {
+                // Wire this up to a backend route when you have one.
+                // For now it's disabled by default to stay truthful.
+                alert(
+                    "Clear-all is a UI stub. Expose a Flask route and hook it up here."
+                );
+            });
+
+            setStatus(
+                "ok",
+                "Ready. Connected to " +
+                    (window.location.origin || "backend") +
+                    "."
+            );
+            updateLastUpdated();
+        })();
     </script>
 </body>
-
 </html>
+
